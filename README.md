@@ -4,11 +4,10 @@ The core Syntro libraries and applications for running a Syntro cloud.
 
 #### Applications
 
-* SyntroCFS
 * SyntroControl
+* SyntroDB
 * SyntroExec
 * SyntroLog
-* SyntroStore 
 
 #### Libraries
 
@@ -27,7 +26,7 @@ The core Syntro libraries and applications for running a Syntro cloud.
 
 ### Build Dependencies
 
-* Qt4 or Qt5 development libraries and headers
+* Qt5 development libraries and headers
 * pkgconfig
 
 ### Fetch
@@ -45,15 +44,16 @@ The core Syntro libraries and applications for running a Syntro cloud.
 After the install step on Linux you will be able to build and run [SyntroLCam][1]
 and [SyntroView][2].
 
-There are VS2010 solution files for building SyntroCore binaries on Windows.
-They are configured for use with Qt5 libraries, but the code is Qt4 compatible.
+There are VS2015 solution files for building SyntroCore binaries on Windows.
+They are configured for use with Qt5 libraries.
+
+For embedded Linux there is a Yocto meta-layer available [meta-syntro][3] 
 
 ### Run
 
-Instructions for running the various SyntroCore applications can be found on
-the [Pansenti website][3].
+TODO
 
-[1]: https://github.com/Syntro/SyntroLCam
-[2]: https://github.com/Syntro/SyntroView
-[3]: http://www.pansenti.com/wordpress/?page_id=547
+[1]: https://github.com/Pansenti/SyntroLCam
+[2]: https://github.com/Pansenti/SyntroView
+[3]: https://github.com/Pansenti/meta-syntro
 
