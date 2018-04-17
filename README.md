@@ -1,6 +1,6 @@
-# SyntroCore
+# SyntroCore - Syntro the cloud compute library
 
-The core Syntro libraries and applications for running a Syntro cloud.
+The core libraries, headers and applications for running a Syntro cloud.
 
 #### Applications
 
