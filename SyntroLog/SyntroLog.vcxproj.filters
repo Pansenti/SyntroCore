@@ -60,17 +60,53 @@
     <ClCompile Include="ViewLogFieldsDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_LogClient.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\StaticDebug\moc_LogClient.cpp">
+      <Filter>Generated Files\StaticDebug</Filter>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_LogClient.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\StaticRelease\moc_LogClient.cpp">
+      <Filter>Generated Files\StaticRelease</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SeverityLevelDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\StaticDebug\moc_SeverityLevelDlg.cpp">
+      <Filter>Generated Files\StaticDebug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_SeverityLevelDlg.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\StaticRelease\moc_SeverityLevelDlg.cpp">
+      <Filter>Generated Files\StaticRelease</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_SyntroLog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\StaticDebug\moc_SyntroLog.cpp">
+      <Filter>Generated Files\StaticDebug</Filter>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_SyntroLog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\StaticRelease\moc_SyntroLog.cpp">
+      <Filter>Generated Files\StaticRelease</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ViewLogFieldsDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\StaticDebug\moc_ViewLogFieldsDlg.cpp">
+      <Filter>Generated Files\StaticDebug</Filter>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ViewLogFieldsDlg.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\StaticRelease\moc_ViewLogFieldsDlg.cpp">
+      <Filter>Generated Files\StaticRelease</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
