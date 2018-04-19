@@ -23,22 +23,6 @@
       <Extensions>moc;h;cpp</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
-    <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{a526846e-a0b3-4a30-b134-0d4c556a1252}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{007814d9-d693-4d17-98aa-be9cc94484e0}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\StaticDebug">
-      <UniqueIdentifier>{921f7179-5bf5-4ca4-944b-dcda4c5f3457}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Generated Files\StaticRelease">
-      <UniqueIdentifier>{dd4d9719-de68-4ad3-8ec0-73784c75b182}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,77 +46,23 @@
     <ClCompile Include="ControlSetupDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ControlConsole.cpp">
-      <Filter>Generated Files\Debug</Filter>
+    <ClCompile Include="GeneratedFiles\moc_SyntroControl.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_ControlConsole.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
+    <ClCompile Include="GeneratedFiles\moc_MulticastDialog.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ControlConsole.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="GeneratedFiles\moc_HelloDialog.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_ControlConsole.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
+    <ClCompile Include="GeneratedFiles\moc_DirectoryDialog.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ControlSetupDlg.cpp">
-      <Filter>Generated Files\Debug</Filter>
+    <ClCompile Include="GeneratedFiles\moc_ControlSetupDlg.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_ControlSetupDlg.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ControlSetupDlg.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_ControlSetupDlg.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DirectoryDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_DirectoryDialog.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DirectoryDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_DirectoryDialog.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_HelloDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_HelloDialog.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_HelloDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_HelloDialog.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MulticastDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_MulticastDialog.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MulticastDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_MulticastDialog.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SyntroControl.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_SyntroControl.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SyntroControl.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_SyntroControl.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
+    <ClCompile Include="GeneratedFiles\moc_ControlConsole.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

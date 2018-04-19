@@ -23,26 +23,6 @@
       <Extensions>moc;h;cpp</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
-    <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{7227aa48-b4b9-4e8a-9789-321d0eb63116}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{22e1e534-5a7b-4d4a-9a05-3cbe97478f8f}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\StaticDebug">
-      <UniqueIdentifier>{9e9b167f-2b38-44d0-a36c-c08e71eb13a8}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\StaticRelease">
-      <UniqueIdentifier>{cf5e88d9-fd60-492c-b5dd-bc7b750c2f6b}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,104 +52,8 @@
     <ClCompile Include="SyntroDBConsole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SyntroDBConsole.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SyntroDBConsole.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_SyntroDBConsole.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_SyntroDBConsole.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_StoreStreamDlg.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_StoreStreamDlg.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_StoreStreamDlg.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_StoreStreamDlg.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_StoreClient.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_StoreClient.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_StoreClient.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_StoreClient.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_DirThread.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_DirThread.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_DirThread.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_DirThread.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_CFSThread.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CFSThread.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_CFSThread.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_CFSThread.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_CFSClient.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_CFSClient.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_CFSClient.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_CFSClient.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SyntroDB.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SyntroDB.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_SyntroDB.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_SyntroDB.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
     <ClCompile Include="ConfigurationDlg.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ConfigurationDlg.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ConfigurationDlg.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_ConfigurationDlg.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_ConfigurationDlg.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
     </ClCompile>
     <ClCompile Include="SyntroStoreBlocksRaw.cpp">
       <Filter>Source Files</Filter>
@@ -191,6 +75,30 @@
     </ClCompile>
     <ClCompile Include="SyntroCFSStructured.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\moc_CFSClient.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\moc_CFSThread.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\moc_ConfigurationDlg.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\moc_DirThread.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\moc_StoreClient.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\moc_StoreStreamDlg.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\moc_SyntroDB.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\moc_SyntroDBConsole.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,8 @@ SyntroCFS/Makefile*
 SyntroGUI/Makefile*
 SyntroControlLib/Makefile*
 SyntroLog/Makefile*
+Win32/
+x64/
 Debug/
 Release/
 Output/

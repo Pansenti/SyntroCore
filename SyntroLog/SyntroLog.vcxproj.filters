@@ -23,26 +23,6 @@
       <Extensions>moc;h;cpp</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
-    <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{d65d4b0d-9ac6-4a7a-abef-03d8f4cf8709}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{559d24ce-1f8f-4d87-99a6-337705d48396}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\StaticDebug">
-      <UniqueIdentifier>{d65d4b0d-9ac6-4a7a-abef-03d8f4cf8709}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\StaticRelease">
-      <UniqueIdentifier>{559d24ce-1f8f-4d87-99a6-337705d48396}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,53 +40,17 @@
     <ClCompile Include="ViewLogFieldsDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_LogClient.cpp">
-      <Filter>Generated Files\Debug</Filter>
+    <ClCompile Include="GeneratedFiles\moc_ViewLogFieldsDlg.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_LogClient.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
+    <ClCompile Include="GeneratedFiles\moc_SyntroLog.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_LogClient.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="GeneratedFiles\moc_SeverityLevelDlg.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_LogClient.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SeverityLevelDlg.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_SeverityLevelDlg.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SeverityLevelDlg.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_SeverityLevelDlg.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SyntroLog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_SyntroLog.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SyntroLog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_SyntroLog.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ViewLogFieldsDlg.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticDebug\moc_ViewLogFieldsDlg.cpp">
-      <Filter>Generated Files\StaticDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ViewLogFieldsDlg.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\StaticRelease\moc_ViewLogFieldsDlg.cpp">
-      <Filter>Generated Files\StaticRelease</Filter>
+    <ClCompile Include="GeneratedFiles\moc_LogClient.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
