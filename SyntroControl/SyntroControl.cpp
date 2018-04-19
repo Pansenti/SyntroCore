@@ -22,12 +22,14 @@
 #include "ControlSetupDlg.h"
 
 #define DEFAULT_ROW_HEIGHT 20
-
+#define CELL_HEIGHT_PAD 12
 
 SyntroControl::SyntroControl()
 	: QMainWindow()
 {
 	ui.setupUi(this);
+
+	int cellHeight = fontMetrics().lineSpacing() + CELL_HEIGHT_PAD;
 
 	connect(ui.actionExit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(ui.actionDirectory, SIGNAL(triggered()), this, SLOT(onDirectory()));
@@ -48,6 +50,8 @@ SyntroControl::SyntroControl()
 	ui.m_table->setColumnWidth(7, 100);
 	ui.m_table->setColumnWidth(8, 100);
 
+	ui.m_table->verticalHeader()->setDefaultSectionSize(cellHeight);
+
     ui.m_table->setHorizontalHeaderLabels(
                 QStringList() << tr("App name") << tr("Component type")
                 << tr("Unique ID") << tr("IP Address") << tr("HB interval")
@@ -58,7 +62,7 @@ SyntroControl::SyntroControl()
 
 	for (int row = 0; row < SYNTRO_MAX_CONNECTEDCOMPONENTS; row++) {
 		ui.m_table->insertRow(row);
-		ui.m_table->setRowHeight(row, DEFAULT_ROW_HEIGHT);
+		ui.m_table->setRowHeight(row, cellHeight);
 
 		for (int col = 0; col < 9; col++) {
 			QTableWidgetItem *item = new QTableWidgetItem();
