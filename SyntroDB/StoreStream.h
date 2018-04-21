@@ -104,7 +104,7 @@ private:
 	StoreDeletionPolicy m_deletionPolicy;
 	StoreDeletionTimeUnits m_deletionTimeUnits;
 	qint32 m_deletionTime;
-	qint64 m_deletionCount;
+	qint32 m_deletionCount;
 
 	QString m_currentFile;
 	QString m_currentFileFullPath;

@@ -55,9 +55,7 @@ public:
 	StoreStreamDlg(QWidget *parent, int index);
 
 public slots:
-	void cancelButtonClick();
-	void okButtonClick();
-
+	void onOK();
 
 private:
 	void layoutWidgets();
@@ -77,7 +75,7 @@ private:
 	QComboBox *m_deletionPolicy;
 	QComboBox *m_deletionTimeUnits;
 	QLineEdit *m_deletionTime;
-	QLineEdit *m_deletionSize;
+	QLineEdit *m_deletionCount;
 	QIntValidator *m_readOnlyValidator;
 	QIntValidator *m_greaterThenZeroValidator;
 

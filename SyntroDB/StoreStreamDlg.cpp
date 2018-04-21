@@ -17,6 +17,9 @@
 //  along with Syntro.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+#include <qvalidator.h>
+#include <qmessagebox.h>
+
 #include "StoreStreamDlg.h"
 #include "StoreStream.h"
 #include "SyntroDB.h"
@@ -26,13 +29,52 @@ StoreStreamDlg::StoreStreamDlg(QWidget *parent, int index)
 {
 	m_index = index;
 	layoutWidgets();
-	connect(m_cancelButton, SIGNAL(clicked()), this, SLOT(cancelButtonClick()));
-	connect(m_okButton, SIGNAL(clicked()), this, SLOT(okButtonClick()));
+	connect(m_cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+	connect(m_okButton, SIGNAL(clicked()), this, SLOT(onOK()));
 	loadCurrentValues();
+	setWindowTitle("Configure Stream Storage");
 }
 
-void StoreStreamDlg::okButtonClick()
+void StoreStreamDlg::onOK()
 {
+	bool ok;
+
+	int rotation_time = m_rotationTime->text().toInt(&ok);
+
+	if (rotation_time < 1) {
+		QMessageBox::warning(this, "Configure Stream Storage", "Rotation time must be at least 1");
+		m_rotationTime->setText(QString::number(SYNTRODB_PARAMS_ROTATION_TIME_DEFAULT));
+		m_rotationTime->setFocus();
+		return;
+	}
+
+	int rotation_size = m_rotationSize->text().toInt();
+
+	if (rotation_size < 1) {
+		QMessageBox::warning(this, "Configure Stream Storage", "Rotation size must be at least 1");
+		m_rotationSize->setText(QString::number(SYNTRODB_PARAMS_ROTATION_SIZE_DEFAULT));
+		m_rotationSize->setFocus();
+		return;
+	}
+
+	int deletion_time = m_deletionTime->text().toInt();
+
+	if (deletion_time < 1) {
+		QMessageBox::warning(this, "Configure Stream Storage", "Deletion time must be at least 1");
+		m_deletionTime->setText(QString::number(SYNTRODB_PARAMS_DELETION_TIME_DEFAULT));
+		m_deletionTime->setFocus();
+		return;
+	}
+
+	int deletion_count = m_deletionCount->text().toInt();
+
+	if (deletion_count < 2) {
+		QMessageBox::warning(this, "Configure Stream Storage", "Deletion count must be at least 2");
+		m_deletionCount->setText("2");
+		m_deletionCount->setFocus();
+		return;
+	}
+
 	QSettings *settings = SyntroUtils::getSettings();
 
 	settings->beginWriteArray(SYNTRODB_PARAMS_STREAM_SOURCES);
@@ -40,12 +82,10 @@ void StoreStreamDlg::okButtonClick()
 
 	if (m_formatCombo->currentIndex() == 1)
 		settings->setValue(SYNTRODB_PARAMS_FORMAT, SYNTRO_RECORD_STORE_FORMAT_RAW);
-	else //if (m_formatCombo->currentIndex() == 0)
+	else
 		settings->setValue(SYNTRODB_PARAMS_FORMAT, SYNTRO_RECORD_STORE_FORMAT_SRF);
 
-	settings->setValue(SYNTRODB_PARAMS_CREATE_SUBFOLDER, 
-		m_subFolderCheck->checkState() == Qt::Checked ? SYNTRO_PARAMS_TRUE : SYNTRO_PARAMS_FALSE);
-
+	settings->setValue(SYNTRODB_PARAMS_CREATE_SUBFOLDER, (m_subFolderCheck->checkState() == Qt::Checked));
 	settings->setValue(SYNTRODB_PARAMS_STREAM_SOURCE, m_streamName->text());
 
 	//	Rotation policy
@@ -78,8 +118,8 @@ void StoreStreamDlg::okButtonClick()
 		break;
 	}
 	
-	settings->setValue(SYNTRODB_PARAMS_ROTATION_TIME, m_rotationTime->text());
-	settings->setValue(SYNTRODB_PARAMS_ROTATION_SIZE, m_rotationSize->text());
+	settings->setValue(SYNTRODB_PARAMS_ROTATION_TIME, rotation_time);
+	settings->setValue(SYNTRODB_PARAMS_ROTATION_SIZE, rotation_size);
 
 	//	Deletion policy
 
@@ -101,21 +141,14 @@ void StoreStreamDlg::okButtonClick()
 		settings->setValue(SYNTRODB_PARAMS_DELETION_TIME_UNITS, SYNTRODB_PARAMS_DELETION_TIME_UNITS_DAYS);
 	else	
 		settings->setValue(SYNTRODB_PARAMS_DELETION_TIME_UNITS, SYNTRODB_PARAMS_DELETION_TIME_UNITS_HOURS);
-			
-	settings->setValue(SYNTRODB_PARAMS_DELETION_TIME, m_deletionTime->text());
-	settings->setValue(SYNTRODB_PARAMS_DELETION_COUNT, m_deletionSize->text());
 
+	settings->setValue(SYNTRODB_PARAMS_DELETION_TIME, deletion_time);
+	settings->setValue(SYNTRODB_PARAMS_DELETION_COUNT, deletion_count);
 
 	settings->endArray();
-
 	delete settings;
 
 	accept();
-}
-
-void StoreStreamDlg::cancelButtonClick()
-{
-	reject();
 }
 
 void StoreStreamDlg::loadCurrentValues()
@@ -132,47 +165,77 @@ void StoreStreamDlg::loadCurrentValues()
 	else // if (settings->value(SYNTRODB_PARAMS_FORMAT) == SYNTRO_RECORD_STORE_FORMAT_SRF)
 		m_formatCombo->setCurrentIndex(0);
 
-	if (settings->value(SYNTRODB_PARAMS_CREATE_SUBFOLDER) == SYNTRO_PARAMS_TRUE)
+	if (settings->value(SYNTRODB_PARAMS_CREATE_SUBFOLDER, true).toBool())
 		m_subFolderCheck->setCheckState(Qt::Checked);
 	else
 		m_subFolderCheck->setCheckState(Qt::Unchecked);
 
 	//	Rotation policy
 
-	QString rotate = settings->value(SYNTRODB_PARAMS_ROTATION_POLICY).toString();
+	QString rotate = settings->value(SYNTRODB_PARAMS_ROTATION_POLICY, SYNTRODB_PARAMS_ROTATION_POLICY_DEFAULT).toString().toLower();
+	
 	if (rotate == SYNTRODB_PARAMS_ROTATION_POLICY_TIME)
 		m_rotationPolicy->setCurrentIndex(0);
 	else if (rotate == SYNTRODB_PARAMS_ROTATION_POLICY_SIZE)
 		m_rotationPolicy->setCurrentIndex(1);
-	else
+	else // SYNTRODB_PARAMS_ROTATION_POLICY_ANY
 		m_rotationPolicy->setCurrentIndex(2);
 
-	m_rotationTimeUnits->setCurrentIndex(0);
-	if (settings->value(SYNTRODB_PARAMS_ROTATION_TIME_UNITS).toString() == SYNTRODB_PARAMS_ROTATION_TIME_UNITS_HOURS)
+
+	QString units = settings->value(SYNTRODB_PARAMS_ROTATION_TIME_UNITS, SYNTRODB_PARAMS_ROTATION_TIME_UNITS_DEFAULT).toString().toLower();
+
+	if (units == SYNTRODB_PARAMS_ROTATION_TIME_UNITS_MINUTES)
+		m_rotationTimeUnits->setCurrentIndex(0);
+	else if (units == SYNTRODB_PARAMS_ROTATION_TIME_UNITS_HOURS)
 		m_rotationTimeUnits->setCurrentIndex(1);
-	if (settings->value(SYNTRODB_PARAMS_ROTATION_TIME_UNITS).toString() == SYNTRODB_PARAMS_ROTATION_TIME_UNITS_DAYS)
+	else // SYNTRODB_PARAMS_ROTATION_TIME_UNITS_DAYS
 		m_rotationTimeUnits->setCurrentIndex(2);
 
-	m_rotationTime->setText(settings->value(SYNTRODB_PARAMS_ROTATION_TIME).toString());
-	m_rotationSize->setText(settings->value(SYNTRODB_PARAMS_ROTATION_SIZE).toString());
+	int time = settings->value(SYNTRODB_PARAMS_ROTATION_TIME, SYNTRODB_PARAMS_ROTATION_TIME_DEFAULT).toInt();
+	
+	if (time < 1)
+		time = 1;
+
+	int size = settings->value(SYNTRODB_PARAMS_ROTATION_SIZE, SYNTRODB_PARAMS_ROTATION_SIZE_DEFAULT).toInt();
+
+	if (size > SYNTRODB_PARAMS_ROTATION_SIZE_MAX)
+		size = SYNTRODB_PARAMS_ROTATION_SIZE_MAX;
+	else if (size < 1)
+		size = 1;
+
+	m_rotationTime->setText(QString::number(time));
+	m_rotationSize->setText(QString::number(size));
 
 	//	Deletion policy
 
-	QString deletion = settings->value(SYNTRODB_PARAMS_DELETION_POLICY).toString();
+	QString deletion = settings->value(SYNTRODB_PARAMS_DELETION_POLICY, SYNTRODB_PARAMS_DELETION_POLICY_DEFAULT).toString().toLower();
+
 	if (deletion == SYNTRODB_PARAMS_DELETION_POLICY_TIME)
 		m_deletionPolicy->setCurrentIndex(0);
 	else if (deletion == SYNTRODB_PARAMS_DELETION_POLICY_COUNT)
 		m_deletionPolicy->setCurrentIndex(1);
-	else
+	else // SYNTRODB_PARAMS_DELETION_POLICY_ANY
 		m_deletionPolicy->setCurrentIndex(2);
 
-	if (settings->value(SYNTRODB_PARAMS_DELETION_TIME_UNITS).toString() == SYNTRODB_PARAMS_DELETION_TIME_UNITS_HOURS)
-		m_deletionTimeUnits->setCurrentIndex(1);
-	else
-		m_deletionTimeUnits->setCurrentIndex(0);
+	units = settings->value(SYNTRODB_PARAMS_DELETION_TIME_UNITS, SYNTRODB_PARAMS_DELETION_TIME_UNITS_DEFAULT).toString().toLower();
 
-	m_deletionTime->setText(settings->value(SYNTRODB_PARAMS_DELETION_TIME).toString());
-	m_deletionSize->setText(settings->value(SYNTRODB_PARAMS_DELETION_COUNT).toString());
+	if (units == SYNTRODB_PARAMS_DELETION_TIME_UNITS_HOURS)
+		m_deletionTimeUnits->setCurrentIndex(0);
+	else // SYNTRODB_PARAMS_DELETION_TIME_UNITS_DAYS
+		m_deletionTimeUnits->setCurrentIndex(1);
+
+	time = settings->value(SYNTRODB_PARAMS_DELETION_TIME).toInt();
+
+	if (time < 1)
+		time = 1;
+
+	int count = settings->value(SYNTRODB_PARAMS_DELETION_COUNT).toInt();
+
+	if (count < 2)
+		count = 2;
+
+	m_deletionTime->setText(QString::number(time));
+	m_deletionCount->setText(QString::number(count));
 
 	settings->endArray();
 
@@ -185,7 +248,6 @@ void StoreStreamDlg::layoutWidgets()
 
 	QHBoxLayout *e = new QHBoxLayout;
 	e->addStretch();
-	formLayout->addRow(new QLabel("Store stream"), e);
 
 	m_formatCombo = new QComboBox;
 	m_formatCombo->addItem("Structured file [srf])");
@@ -194,7 +256,7 @@ void StoreStreamDlg::layoutWidgets()
 	QHBoxLayout *a = new QHBoxLayout;
 	a->addWidget(m_formatCombo);
 	a->addStretch();
-	formLayout->addRow(new QLabel("Store format"), a);
+	formLayout->addRow(new QLabel("Format"), a);
 
 	m_streamName = new QLineEdit;
 	m_streamName->setMinimumWidth(200);
@@ -211,6 +273,7 @@ void StoreStreamDlg::layoutWidgets()
 	m_rotationPolicy->addItem(SYNTRODB_PARAMS_ROTATION_POLICY_SIZE);
 	m_rotationPolicy->addItem(SYNTRODB_PARAMS_ROTATION_POLICY_ANY);
 	m_rotationPolicy->setEditable(false);
+
 	QHBoxLayout *b = new QHBoxLayout;
 	b->addWidget(m_rotationPolicy);
 	b->addStretch();
@@ -228,10 +291,12 @@ void StoreStreamDlg::layoutWidgets()
 		
 	m_rotationTime = new QLineEdit;
 	m_rotationTime->setMaximumWidth(100);
+	m_rotationTime->setValidator(new QIntValidator(1, 1000, this));
 	formLayout->addRow(new QLabel("Rotation time"), m_rotationTime);
 
 	m_rotationSize = new QLineEdit;
 	m_rotationSize->setMaximumWidth(100);
+	m_rotationSize->setValidator(new QIntValidator(1, SYNTRODB_PARAMS_ROTATION_SIZE_MAX, this));
 	formLayout->addRow(new QLabel("Rotation size (MB)"), m_rotationSize);
 
 	//	Deletion policy
@@ -257,12 +322,13 @@ void StoreStreamDlg::layoutWidgets()
 		
 	m_deletionTime = new QLineEdit;
 	m_deletionTime->setMaximumWidth(100);
+	m_deletionTime->setValidator(new QIntValidator(1, 1000, this));
 	formLayout->addRow(new QLabel("Max age of file"), m_deletionTime);
 
-	m_deletionSize = new QLineEdit;
-	m_deletionSize->setMaximumWidth(100);
-	formLayout->addRow(new QLabel("Max files to keep"), m_deletionSize);
-
+	m_deletionCount = new QLineEdit;
+	m_deletionCount->setMaximumWidth(100);
+	m_deletionCount->setValidator(new QIntValidator(2, 10000, this));
+	formLayout->addRow(new QLabel("Max files to keep"), m_deletionCount);
 
 	QHBoxLayout *buttonLayout = new QHBoxLayout;
 
@@ -279,8 +345,6 @@ void StoreStreamDlg::layoutWidgets()
 	mainLayout->addSpacing(20);
 	mainLayout->addLayout(buttonLayout);
 	setLayout(mainLayout);
-
-	setWindowTitle("Configure entry");
 }
 
 //----------------------------------------------------------
@@ -299,6 +363,7 @@ void StoreLabel::mousePressEvent (QMouseEvent *)
 	fileDialog = new QFileDialog(this, "Store folder path");
 	fileDialog->setFileMode(QFileDialog::DirectoryOnly);
 	fileDialog->selectFile(text());
+
 	if (fileDialog->exec())
 		setText(fileDialog->selectedFiles().at(0));
 }

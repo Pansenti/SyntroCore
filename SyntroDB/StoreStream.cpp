@@ -21,10 +21,6 @@
 #include "StoreStream.h"
 #include "SyntroDB.h"
 
-#define MAX_FILE_ROTATION_SIZE 2000									// 2GB
-
-#define DEFAULT_FILE_ROTATION_SIZE 256								// 256MB
-
 // static function
 // This limitation based on static entries in the settings file
 // is going away. This is a temporary way to hide it.
@@ -504,19 +500,19 @@ bool StoreStream::load(QSettings *settings, const QString& rootDirectory)
 	// set defaults if nothing there
 
 	if (!settings->contains(SYNTRODB_PARAMS_FORMAT))
-		settings->setValue(SYNTRODB_PARAMS_FORMAT, SYNTRO_RECORD_STORE_FORMAT_SRF);
+		settings->setValue(SYNTRODB_PARAMS_FORMAT, SYNTRO_RECORD_STORE_FORMAT_RAW);
 
 	if (!settings->contains(SYNTRODB_PARAMS_ROTATION_POLICY))
-		settings->setValue(SYNTRODB_PARAMS_ROTATION_POLICY, SYNTRODB_PARAMS_ROTATION_POLICY_TIME);
+		settings->setValue(SYNTRODB_PARAMS_ROTATION_POLICY, SYNTRODB_PARAMS_ROTATION_POLICY_DEFAULT);
 
 	if (!settings->contains(SYNTRODB_PARAMS_ROTATION_TIME_UNITS))
-		settings->setValue(SYNTRODB_PARAMS_ROTATION_TIME_UNITS, SYNTRODB_PARAMS_ROTATION_TIME_UNITS_DAYS);
+		settings->setValue(SYNTRODB_PARAMS_ROTATION_TIME_UNITS, SYNTRODB_PARAMS_ROTATION_TIME_UNITS_DEFAULT);
 
 	if (!settings->contains(SYNTRODB_PARAMS_ROTATION_TIME))
-		settings->setValue(SYNTRODB_PARAMS_ROTATION_TIME, 1);
+		settings->setValue(SYNTRODB_PARAMS_ROTATION_TIME, SYNTRODB_PARAMS_ROTATION_TIME_DEFAULT);
 
 	if (!settings->contains(SYNTRODB_PARAMS_ROTATION_SIZE))
-		settings->setValue(SYNTRODB_PARAMS_ROTATION_SIZE, DEFAULT_FILE_ROTATION_SIZE);
+		settings->setValue(SYNTRODB_PARAMS_ROTATION_SIZE, SYNTRODB_PARAMS_ROTATION_SIZE_DEFAULT);
 
 	if (!settings->contains(SYNTRODB_PARAMS_DELETION_POLICY))
 		settings->setValue(SYNTRODB_PARAMS_DELETION_POLICY, SYNTRODB_PARAMS_DELETION_POLICY_COUNT);
@@ -525,10 +521,10 @@ bool StoreStream::load(QSettings *settings, const QString& rootDirectory)
 		settings->setValue(SYNTRODB_PARAMS_DELETION_TIME_UNITS, SYNTRODB_PARAMS_DELETION_TIME_UNITS_DAYS);
 
 	if (!settings->contains(SYNTRODB_PARAMS_DELETION_TIME))
-		settings->setValue(SYNTRODB_PARAMS_DELETION_TIME, 2);
+		settings->setValue(SYNTRODB_PARAMS_DELETION_TIME, SYNTRODB_PARAMS_DELETION_TIME_DEFAULT);
 
 	if (!settings->contains(SYNTRODB_PARAMS_DELETION_COUNT))
-		settings->setValue(SYNTRODB_PARAMS_DELETION_COUNT, 5);
+		settings->setValue(SYNTRODB_PARAMS_DELETION_COUNT, SYNTRODB_PARAMS_DELETION_COUNT_DEFAULT);
 
 	if (!settings->contains(SYNTRODB_PARAMS_CREATE_SUBFOLDER))
 		settings->setValue(SYNTRODB_PARAMS_CREATE_SUBFOLDER, true);
@@ -564,7 +560,8 @@ bool StoreStream::load(QSettings *settings, const QString& rootDirectory)
 
 	//	Format
 
-	str = settings->value(SYNTRODB_PARAMS_FORMAT).toString().toLower();
+	str = settings->value(SYNTRODB_PARAMS_FORMAT, SYNTRO_RECORD_STORE_FORMAT_RAW).toString().toLower();
+
 	if (str == SYNTRO_RECORD_STORE_FORMAT_SRF)
 		m_storeFormat = structuredFileFormat;
 	else 
@@ -572,42 +569,43 @@ bool StoreStream::load(QSettings *settings, const QString& rootDirectory)
 
 	//	Rotation
 
-	str = settings->value(SYNTRODB_PARAMS_ROTATION_POLICY).toString().toLower();
+	str = settings->value(SYNTRODB_PARAMS_ROTATION_POLICY, SYNTRODB_PARAMS_ROTATION_POLICY_DEFAULT).toString().toLower();
 		
-	if (str == SYNTRODB_PARAMS_ROTATION_POLICY_ANY)
-		m_rotationPolicy = anyRotation;
+	if (str == SYNTRODB_PARAMS_ROTATION_POLICY_TIME)
+		m_rotationPolicy = timeRotation;
 	else if (str == SYNTRODB_PARAMS_ROTATION_POLICY_SIZE)
 		m_rotationPolicy = sizeRotation;
 	else 
-		m_rotationPolicy = timeRotation;
+		m_rotationPolicy = anyRotation;
 
-	if (m_rotationPolicy == timeRotation || m_rotationPolicy == anyRotation) {
-		str = settings->value(SYNTRODB_PARAMS_ROTATION_TIME_UNITS).toString().toLower();
+	str = settings->value(SYNTRODB_PARAMS_ROTATION_TIME_UNITS, SYNTRODB_PARAMS_ROTATION_TIME_UNITS_DAYS).toString().toLower();
 
+	m_rotationTime = settings->value(SYNTRODB_PARAMS_ROTATION_TIME, SYNTRODB_PARAMS_ROTATION_TIME_DEFAULT).toInt();
+
+	if (m_rotationTime < 1)
+		m_rotationTime = 1;
+
+	if (str == SYNTRODB_PARAMS_ROTATION_TIME_UNITS_MINUTES) {
+		m_rotationTimeUnits = rotationMinuteUnits;
+		m_rotationSecs = m_rotationTime * 60;
+	}
+	else if (str == SYNTRODB_PARAMS_ROTATION_TIME_UNITS_HOURS) {
+		m_rotationTimeUnits = rotationHourUnits;
+		m_rotationSecs = m_rotationTime * 3600;
+	}
+	else {
 		m_rotationTimeUnits = rotationDayUnits;
-		if (str == SYNTRODB_PARAMS_ROTATION_TIME_UNITS_HOURS)
-			m_rotationTimeUnits = rotationHourUnits;
-		if (str == SYNTRODB_PARAMS_ROTATION_TIME_UNITS_MINUTES)
-			m_rotationTimeUnits = rotationMinuteUnits;
-
-		m_rotationTime = settings->value(SYNTRODB_PARAMS_ROTATION_TIME).toInt();
-		if (m_rotationTime < 0)
-			m_rotationTime = 0;
-		m_rotationSecs = 0;
-		if (m_rotationTimeUnits == rotationHourUnits)
-			m_rotationSecs = m_rotationTime * 3600;
-		if (m_rotationTimeUnits == rotationMinuteUnits)
-			m_rotationSecs = m_rotationTime * 60;
+		m_rotationSecs = m_rotationTime * 3600 * 24;
 	}
 
-	if (m_rotationPolicy == sizeRotation || m_rotationPolicy == anyRotation) {
-		m_rotationSize = settings->value(SYNTRODB_PARAMS_ROTATION_SIZE).toULongLong();
-		if (m_rotationSize < 0)
-			m_rotationSize = 0;
-		else if (m_rotationSize > MAX_FILE_ROTATION_SIZE)
-			m_rotationSize = MAX_FILE_ROTATION_SIZE;
-		m_rotationSize *= 1000 * 1000;
-	}
+	qint32 size = settings->value(SYNTRODB_PARAMS_ROTATION_SIZE).toInt();
+
+	if (size < 1)
+		size = 1;
+	else if (size > SYNTRODB_PARAMS_ROTATION_SIZE_MAX)
+		size = SYNTRODB_PARAMS_ROTATION_SIZE_MAX;
+
+	m_rotationSize = size * 1024 * 1024;
 
 	//	Deletion
 
@@ -620,31 +618,27 @@ bool StoreStream::load(QSettings *settings, const QString& rootDirectory)
 	else 
 		m_deletionPolicy = countDeletion;
 
-	if (m_deletionPolicy == timeDeletion || m_deletionPolicy == anyDeletion) {
-		str = settings->value(SYNTRODB_PARAMS_DELETION_TIME_UNITS).toString().toLower();
+	str = settings->value(SYNTRODB_PARAMS_DELETION_TIME_UNITS, SYNTRODB_PARAMS_DELETION_TIME_UNITS_DEFAULT).toString().toLower();
 
-		if (str == SYNTRODB_PARAMS_DELETION_TIME_UNITS_HOURS)
-			m_deletionTimeUnits = deletionHourUnits;
-		else 
-			m_deletionTimeUnits = deletionDayUnits;
-	}
+	if (str == SYNTRODB_PARAMS_DELETION_TIME_UNITS_HOURS)
+		m_deletionTimeUnits = deletionHourUnits;
+	else 
+		m_deletionTimeUnits = deletionDayUnits;
 
-	m_deletionTime = settings->value(SYNTRODB_PARAMS_DELETION_TIME).toInt();
+	m_deletionTime = settings->value(SYNTRODB_PARAMS_DELETION_TIME, SYNTRODB_PARAMS_DELETION_TIME_DEFAULT).toInt();
 
-	if (m_deletionTime < 0)
-		m_deletionTime = 0;
+	if (m_deletionTime < 1)
+		m_deletionTime = 1;
 	
 	if (m_deletionTimeUnits == deletionHourUnits)
 		m_deletionSecs = m_deletionTime * 3600;
 	else 
 		m_deletionSecs = m_deletionTime * 3600 * 24;
 
-	if (m_deletionPolicy == countDeletion || m_deletionPolicy == anyDeletion) {
-		m_deletionCount = settings->value(SYNTRODB_PARAMS_DELETION_COUNT).toULongLong();
+	m_deletionCount = settings->value(SYNTRODB_PARAMS_DELETION_COUNT, SYNTRODB_PARAMS_DELETION_COUNT_DEFAULT).toULongLong();
 
-		if (m_deletionCount < 2)
-			m_deletionCount = 2;
-	}
+	if (m_deletionCount < 2)
+		m_deletionCount = 2;
 
 	return true;
 }
