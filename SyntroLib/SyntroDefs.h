@@ -22,7 +22,7 @@
 
 //	Version
 
-#define	SYNTROLIB_VERSION	"0.9.3"
+#define	SYNTROLIB_VERSION	"0.9.6"
 
 //	Timer definition
 //
