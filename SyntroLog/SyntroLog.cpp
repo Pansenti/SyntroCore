@@ -138,7 +138,7 @@ void SyntroLog::updateTable(QStringList msg)
     if (row < 0)
         return;
 
-	ui.logTable->insertRow(row);
+    ui.logTable->insertRow(row);
 
     for (int i = 0; i < m_viewFields.count(); i++) {
         int field = m_viewFields.at(i);
